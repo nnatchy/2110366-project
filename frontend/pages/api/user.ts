@@ -12,34 +12,10 @@ import {
   getDocs,
 } from "firebase/firestore";
 
+const db = getFirestore(firebase);
+const toilets = collection(db, 'toilets');
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const db = getFirestore(firebase);
-  if (req.method === "GET") {
-    res.status(200).json({
-      faculty: "ENGINEER",
-      building: "3",
-      floor: "3",
-      gender: "MALE",
-      capacity: "4",
-      moisture: 1000, // ความชื้น
-      availableRoom: {
-        "1": {
-          waterPressure: 200
-        },
-        "2": {
-          waterPressure: 200
-        },
-        "3": {
-          waterPressure: 200
-        },
-        "4": {
-          waterPressure: 200
-        },
-      }
-    })
-  }
-}
+getDocs(toilets).then((snapshot) => {
+  console.log(snapshot.docs)
+})
+
