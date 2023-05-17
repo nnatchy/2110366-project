@@ -22,7 +22,7 @@ const Main = () => {
         return () => {
             clearInterval(updatedDateTime);
         }
-    }, [])
+    }, []) // updated time every 20 seconds (will change later)
 
     return (
         <div className="font-poppins bg-green-100 m-0 p-0 h-screen overflow-hidden">
