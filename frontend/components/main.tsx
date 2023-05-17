@@ -5,7 +5,7 @@ import Sensor from "./sensor"
 
 const Main = () => {
     return (
-        <div className="">
+        <div className="font-poppins">
             <div className="flex items-center justify-between text-white py-4 px-8 bg-red-400">
                 {/* Headline */}
                 <h1 className="text-3xl font-bold">Should I water the plants ?</h1>
