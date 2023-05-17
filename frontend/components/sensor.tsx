@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {FaSun} from 'react-icons/fa'
 
 const Sensor = () => {
     return (
@@ -7,7 +8,10 @@ const Sensor = () => {
             <div className=''>
                 {/* Temperature */}
                 <section id="temperature" className="flex px-8 py-8 justify-around">
+                <span>
                     <h2 className='items-center justify-center'>Temperature</h2>
+                    <FaSun/>
+                </span>
                     <p className=''>100</p>
                     <p>200</p>
                 </section>

@@ -2,21 +2,26 @@ import React, { useEffect, useState, useRef } from "react";
 import Measurement from "./measurement"
 import PopUp from "./tools/modal"
 import Sensor from "./sensor"
+import { FaTree, FaWater } from "react-icons/fa";
 
 const Main = () => {
     return (
         <div className="font-poppins">
-            <div className="flex items-center justify-between text-white py-4 px-8 bg-red-400">
-                {/* Headline */}
-                <h1 className="text-3xl font-bold">Should I water the plants ?</h1>
-                <div className="flex"></div>
-                <div className="flex items-center justify-items-center gap-[17rem] px-8 ">
-                    <h1 className="text-xl font-bold mx-4">Status</h1>
-                    <h1 className="text-xl font-bold mr-10">Value</h1>
-                </div>
-                <PopUp />
-            </div>
+            <div className="fixed bg-green-300 top-0 w-[100%] z-20">
+                <div className="container mx-auto flex justify-between items-center px-4 py-4">
+                    <div className="flex gap-1 items-center text-2xl font-bold">
+                        <span className="italic">Plants</span>
+                        <FaTree/> 
+                        <span className="italic text-blue-800">Watering</span>
+                    </div>
+                    <div className="flex gap-6">
 
+                    </div>
+                    <div>Status</div>
+                    <div>Value</div>
+                    <PopUp/>
+                </div>
+            </div>
 
             {/* Sensor Value */}
             <div id="sensor" className="py-4">
