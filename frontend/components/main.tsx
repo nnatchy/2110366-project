@@ -1,55 +1,33 @@
-import React from "react";
-import Floor from "./floor";
+import React, { useEffect, useState, useRef } from "react";
+import Measurement from "./measurement"
+import PopUp from "./tools/popup"
+import Sensor from "./sensor"
 
 const Main = () => {
     return (
-        <div id="main" className="w-full md:h-screen p-2 flex items-center py-8 bg-red-300">
-            <div className="max-w-[1240px] m-auto md:grid grid-cols-3 gap-8">
-                <div className="col-span-2 text-3xl">
-                    <p className="uppercase text-xl tracking-widest text-red-400">TOILET</p>
-                    <h2 className="py-4">TOOOO</h2>
-                    <p className="py-2 text-grey-500">HELLOO</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Quibusdam tenetur laborum aspernatur explicabo repellendus, 
-                        error reiciendis ratione atque quaerat sed reprehenderit excepturi
-                         id totam sapiente molestiae iure? Minus, necessitatibus ea?
-                    </p>
-                    <Floor
-                        floorNumber='1'
-                        gender='male'
-                    />
-                    <Floor
-                        floorNumber='1'
-                        gender='female'
-                    />
-                    <Floor
-                        floorNumber='2'
-                        gender='male'
-                    />
-                    <Floor
-                        floorNumber='2'
-                        gender='female'
-                    />
-                    <Floor
-                        floorNumber='3'
-                        gender='male'
-                    />
-                    <Floor
-                        floorNumber='3'
-                        gender='female'
-                    />
-                    <Floor
-                        floorNumber='4'
-                        gender='male'
-                    />
-                    <Floor
-                        floorNumber='4'
-                        gender='female'
-                    />
+        <div className="">
+            <div className="flex items-center justify-between text-white py-4 px-8 bg-red-400">
+                {/* Headline */}
+                <h1 className="text-3xl font-bold">Raining Prediction</h1>
+                <div className="flex-grow"></div>
+                <div className="flex items-center space-x-8">
+                    <h1 className="text-xl font-bold mr-10">Status</h1>
+                    <h1 className="text-xl font-bold mr-10">Value</h1>
                 </div>
+                <PopUp />
             </div>
+
+
+            {/* Sensor Value */}
+            <div id="sensor">
+                <Sensor />
+            </div>
+            {/* Measurement */}
+            <section id="measurement">
+                <Measurement />
+            </section>
         </div>
-    )
-}
+    );
+};
 
 export default Main;

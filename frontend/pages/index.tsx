@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>toilet-choosing</title>
+        <title>weather-changing</title>
         <meta name='description' content='Published by LockPaoMai' />
       </Head>
       <Main/>
