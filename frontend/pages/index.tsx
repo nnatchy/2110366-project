@@ -18,7 +18,6 @@ import {
 import React from "react"
 import { useEffect, useState } from "react"
 
-import Floor from '../components/floor'
 import Main from '../components/main'
 
 const inter = Inter({ subsets: ['latin'] })
