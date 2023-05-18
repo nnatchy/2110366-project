@@ -67,7 +67,7 @@ const Sensor = () => {
 
     const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
 
-    // ? Assign value from firebase to the array
+    // ? Assign value from firebase to the array + update
     useEffect(() => {
         const fetchData = async () => {
           const newStatus: string[] = [];
