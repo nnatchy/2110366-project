@@ -66,53 +66,81 @@ const Sensor = () => {
     // TODO iterate through object and put it in the correct order
 
     const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
-    let cntTime = 0;
+
+    // ? Assign value from firebase to the array
     useEffect(() => {
         const fetchData = async () => {
-            const status: string[] = [];
-            const average: number[] = [];
-            const min: number[] = [];
-            const max: number[] = [];
-    
-            for (const factor of factors) {
-                const val = await fetchValueFromDoc(factor, "status", collections);
-                if (val !== null) {
-                    status.push(val);
-                }
+          const newStatus: string[] = [];
+          const newAverage: number[] = [];
+          const newMin: number[] = [];
+          const newMax: number[] = [];
+      
+          for (const factor of factors) {
+            const statusVal = await fetchValueFromDoc(factor, "status", collections);
+            const averageVal = await fetchValueFromDoc(factor, "average", collections);
+            const minVal = await fetchValueFromDoc(factor, "min", collections);
+            const maxVal = await fetchValueFromDoc(factor, "max", collections);
+      
+            if (statusVal !== null) {
+              newStatus.push(statusVal);
             }
-    
-            for (const factor of factors) {
-                const val = await fetchValueFromDoc(factor, "average", collections);
-                if (val !== null) {
-                    average.push(val);
-                }
+            if (averageVal !== null) {
+              newAverage.push(averageVal);
             }
-    
-            for (const factor of factors) {
-                const val = await fetchValueFromDoc(factor, "min", collections);
-                if (val !== null) {
-                    min.push(val);
-                }
+            if (minVal !== null) {
+              newMin.push(minVal);
             }
-    
-            for (const factor of factors) {
-                const val = await fetchValueFromDoc(factor, "max", collections);
-                if (val !== null) {
-                    max.push(val);
-                }
+            if (maxVal !== null) {
+              newMax.push(maxVal);
             }
-    
-            // Use the retrieved data
-            setStatus(status);
-            setAverage(average);
-            setMin(min);
-            setMax(max);
-            setCnt(cnt => cnt + 1)
+          }
+
+          // Compare new values with old values and conditionally update
+          setStatus(prevStatus => {
+            const updatedStatus = [...prevStatus];
+            newStatus.forEach((val, index) => {
+              updatedStatus[index] = val;
+            });
+            return updatedStatus;
+          });
+      
+          setAverage(prevAverage => {
+            const updatedAverage = [...prevAverage];
+            newAverage.forEach((val, index) => {
+              updatedAverage[index] = val;
+            });
+            return updatedAverage;
+          });
+      
+          setMin(prevMin => {
+            const updatedMin = [...prevMin];
+            newMin.forEach((val, index) => {
+                updatedMin[index] = val;
+            //   if (val < updatedMin[index]) {
+            //     updatedMin[index] = val;
+            //   }
+            });
+            return updatedMin;
+          });
+      
+          setMax(prevMax => {
+            const updatedMax = [...prevMax];
+            newMax.forEach((val, index) => {
+                updatedMax[index] = val;
+            //   if (val > updatedMax[index]) {
+            //     updatedMax[index] = val;
+            //   }
+            });
+            return updatedMax;
+          });
+      
+          setCnt(prevCnt => prevCnt + 1);
         };
+      
         fetchData();
-    }, []);
+      }, []);
     
-    console.log("This is status: ", status)
+    console.log("This is min: ", min)
 
     return (
         <div className='justify-between space-y-8'>
