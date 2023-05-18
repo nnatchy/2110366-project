@@ -17,19 +17,22 @@ const Main = () => {
         return () => clearInterval(timer);
     }, []);
 
+    // Push button in 411 to update information ?
     useEffect(() => {
+        const second = 1000;
+        const minute = second * 60;
         const updatedDateTime = setInterval(() => {
             setUpdatedDateTime(new Date());
-        }, 20000);
+        }, minute * 30);
         return () => {
             clearInterval(updatedDateTime);
         }
-    }, []) // updated time every 20 seconds (will change later)
+    }, []) // updated value every 30 minutes (will change later)
 
     return (
         <div className="font-poppins bg-green-100 m-0 p-0 h-screen overflow-hidden">
             <div className="fixed bg-green-300 top-0 w-[100%] z-20">
-                <div className="container mx-auto flex justify-between items-center px-4 py-4">
+                <div className="container mx-auto flex justify-between items-center  py-4">
                     <div className="flex gap-1 items-center text-2xl font-bold mr-10">
                         <span className="italic">Plants</span>
                         <FaTree />
@@ -40,8 +43,6 @@ const Main = () => {
                         <div>Status</div>
                         <div>Value</div>
                     </div>
-                    <div>Status</div>
-                    <div>Value</div>
                     <Fragment>
                         <div>
                         <button className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium text-sm rounded-lg px-5 py-2.5 text-center mr-5" 
