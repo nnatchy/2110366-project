@@ -6,6 +6,7 @@ import {
   getFirestore,
   doc,
   collection,
+  DocumentData,
   setDoc,
   getDoc,
   deleteDoc,
@@ -32,6 +33,8 @@ const Sensor = () => {
       return { name, docs };
     };
 
+
+
     console.log("################################")
     Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
     .then(results => {
@@ -52,10 +55,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Temperature</h2>
                         <FaSun />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -66,10 +71,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Humidity</h2>
                         <FaTint />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -80,10 +87,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Wind Speed</h2>
                         <FaWind />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -94,10 +103,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Rain Meter</h2>
                         <FaCloudRain />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -108,10 +119,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Soil Moisture</h2>
                         <FaWater />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -122,10 +135,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Raining chance</h2>
                         <FaPercentage />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -136,10 +151,12 @@ const Sensor = () => {
                         <h2 className='items-center justify-center'>Need to water</h2>
                         <FaQuestion />
                     </div>
-                    <div className="flex"></div>
-                    <div className='flex gap-[17rem] font-bold text-xl text-black'>
+                    <div className='flex gap-[6rem] font-bold text-xl text-black'>
+                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
+                        <p className="">0</p>
+                        <p className="">100</p>
                     </div>
                     <div className="flex"></div>
                 </section>

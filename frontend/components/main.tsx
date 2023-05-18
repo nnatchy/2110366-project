@@ -28,10 +28,12 @@ const Main = () => {
                         <FaTree />
                         <span className="italic text-blue-800">Watering</span>
                     </div>
-                    <div className="flex"></div>
-                    <div className="flex gap-[16rem] font-bold text-xl text-black">
+                    <div className="flex gap-[6rem] font-bold text-xl text-black">
+                        <div>Count</div>
                         <div>Status</div>
-                        <div>Value</div>
+                        <div>Average</div>
+                        <div>Min</div>
+                        <div>Max</div>
                     </div>
                     <Fragment>
                         <div>
