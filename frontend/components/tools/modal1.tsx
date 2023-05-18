@@ -11,7 +11,7 @@ const data = [
   // Add more sample data here...
 ];
 
-function TablePage({ onClose }) {
+function TablePage({ onClose } : any) {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="flex flex-col w-full p-8 space-y-4 items-center bg-white rounded-lg shadow-md  mx-auto">
