@@ -11,12 +11,17 @@ const data = [
   // Add more sample data here...
 ];
 
-function TablePage() {
+function TablePage({ onClose }) {
   return (
     <div className="flex flex-col items-center justify-center py-2">
       <div className="flex flex-col w-full p-8 space-y-4 items-center bg-white rounded-lg shadow-md  mx-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
+            <tr>
+              <th colSpan={4} className="text-center text-2xl py-3 bg-gray-50">
+                Measurement
+              </th>
+            </tr>
             <tr>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 Variable
@@ -51,6 +56,9 @@ function TablePage() {
             ))}
           </tbody>
         </table>
+        <button className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium text-xl self-center mb-4 rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300' 
+          onClick={onClose}
+        >  EXIT  </button>
       </div>
     </div>
   );
@@ -63,17 +71,13 @@ const Modal1 = ({ isVisible, onClose }: any) => {
     <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex
     justify-center items-center transition-opacity duration-500 ease-in-out opacity-100'>
       <div className='w-[600px] flex flex-col items-center justify-between'>
-        <div className='bg-white p-2
-            rounded'>
-          {TablePage()}
+        <div className='bg-white p-2 rounded'>
+          <TablePage onClose={onClose} />
         </div>
-        <button className='text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium text-xl self-center mb-4 rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-12 h-12 rounded-full bg-blue-700  hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300' onClick={() => onClose()}
-        >  EXIT  </button>
       </div>
     </div>
   );
 };
-
 
 export default Modal1;
 
