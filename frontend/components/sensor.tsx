@@ -1,47 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTint, FaCloudRain, FaPercentage, FaQuestion, FaSun, FaWater, FaWind } from 'react-icons/fa'
 
 import firebase from "../lib/firebase"
 import {
-  getFirestore,
-  doc,
-  collection,
-  DocumentData,
-  setDoc,
-  getDoc,
-  deleteDoc,
-  serverTimestamp,
-  getDocs,
+    getFirestore,
+    doc,
+    collection,
+    DocumentData,
+    setDoc,
+    getDoc,
+    deleteDoc,
+    serverTimestamp,
+    getDocs,
 } from "firebase/firestore";
 
 const Sensor = () => {
 
     const db = getFirestore(firebase);
     const collections = [
-      { name: "temperature", ref: collection(db, "temperature") },
-      { name: "humidity", ref: collection(db, "humidity") },
-      { name: "wind-speed", ref: collection(db, "wind-speed") },
-      { name: "rain-meter", ref: collection(db, "rain-meter") },
-      { name: "soil-moisture", ref: collection(db, "soil-moisture") },
-      { name: "raining-chance", ref: collection(db, "raining-chance") },
-      { name: "need-to-water", ref: collection(db, "need-to-water") },
+        { name: "temperature", ref: collection(db, "temperature") },
+        { name: "humidity", ref: collection(db, "humidity") },
+        { name: "wind-speed", ref: collection(db, "wind-speed") },
+        { name: "rain-meter", ref: collection(db, "rain-meter") },
+        { name: "soil-moisture", ref: collection(db, "soil-moisture") },
+        { name: "raining-chance", ref: collection(db, "raining-chance") },
+        { name: "need-to-water", ref: collection(db, "need-to-water") },
     ];
-  
+
     const fetchDataFromCollection = async (name: string, collectionRef: any) => {
-      const snapshot = await getDocs(collectionRef);
-      const docs = snapshot.docs.map(doc => doc.data());
-      return { name, docs };
+        const snapshot = await getDocs(collectionRef);
+        const docs = snapshot.docs.map(doc => doc.data());
+        return { name, docs };
     };
 
+    const fetchValueFromDoc = async (wantedSensor: string, wantedField: string, collections: any) => {
+        let arr: any[] = [];
+        await Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
+            .then(results => {
+                results.forEach(({ name, docs }) => {
+                    if (name === wantedSensor) {
+                        docs.forEach((doc) => {
+                            arr.push(doc[wantedField]); // assuming 'wanted' is a field in your document
+                        });
+                    }
+                });
+            });
 
+        return arr;
+    };
+    console.log("Yay");
+    console.log(fetchValueFromDoc("temperature", "count", collections));
 
-    console.log("################################")
-    Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
-    .then(results => {
-      results.forEach(({ name, docs }) => {
-        console.log(`Data for ${name}:`, docs);
-      });
-    });
+    // ? For testing the output
+
+    // Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
+    //     .then(results => {
+    //         results.forEach(({ name, docs }) => {
+    //             console.log("########### FOR TEST ##########")
+    //             docs.forEach((doc) => {
+    //                 Object.entries(doc).forEach(([key, val]) => {
+    //                     console.log(`Data for ${name}: it's key : ${key}, it's val : ${val}`);
+    //                 });
+    //             });
+    //             // console.log(`Data for ${name}`, docs);
+    //         });
+    //     });
+
+    // TODO iterate through object and put it in the correct order
+    let countArray: Number[] = [];
+    let statusArray: String[] = [];
+    let averageArray: Number[] = [];
+    let minArray: Number[] = [];
+    let maxArray: Number[] = [];
 
     return (
         <div className='justify-between space-y-8'>
