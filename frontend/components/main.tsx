@@ -34,11 +34,14 @@ const Main = () => {
     return (
         <div className="font-poppins bg-backgroundColor m-0 p-0 w-full h-screen overflow-hidden">
             <div className="fixed bg-gradient-to-l from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% top-0 w-[100%] z-20">
-                <div className="container mx-auto flex justify-between items-center  py-10">
-                    <div className="flex gap-1 items-center text-3xl font-bold mr-10">
+                <div className={!isLost ? "container mx-auto flex justify-between items-center py-10" : "container mx-auto flex justify-between items-center  py-4 gap-2"}>
+                    <div className="flex gap-1 items-center text-4xl font-bold mr-10">
                         <span className="italic">Plants</span>
                         <FaTree />
                         <span className="italic text-blue-800">Watering</span>
+                    </div>
+                    <div className="text-5xl font-bold bg-gradient-to-r from-cyan-200 from-40% via-sky-300 via-60% to-cyan-300 to-70% text-transparent bg-clip-text">
+                        <span>LOCK PAO MAI</span>
                     </div>
                     <Fragment>
                         <div>
@@ -56,9 +59,6 @@ const Main = () => {
             {/* Sensor Value */}
             <div className="py-10 mt-10">
                 <Sensor />
-            </div>
-            <div className="ml-10">
-                <span>Total Count: 20</span>
             </div>
             {/*Time */}
             <Time />

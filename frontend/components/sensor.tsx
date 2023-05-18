@@ -16,9 +16,14 @@ import {
 
 const Sensor = () => {
     const [isLost, setIsLost] = useState(false);
+    const [status, setStatus] = useState<string[]>([]);
+    const [average, setAverage] = useState<number[]>([]);
+    const [min, setMin] = useState<number[]>([]);
+    const [max, setMax] = useState<number[]>([]);
+    const [cnt, setCnt] = useState<number>(0);
 
-     // check for < 1024
-     useEffect(() => {
+    // check for < 1024
+    useEffect(() => {
         const checkScreenSizeUnder1024 = () => {
             setIsLost(window.innerWidth < 1024);
         };
@@ -45,67 +50,81 @@ const Sensor = () => {
     };
 
     const fetchValueFromDoc = async (wantedSensor: string, wantedField: string, collections: any) => {
-        let arr: any[] = [];
-        await Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
-            .then(results => {
-                results.forEach(({ name, docs }) => {
-                    if (name === wantedSensor) {
-                        docs.forEach((doc) => {
-                            arr.push(doc[wantedField]); // assuming 'wanted' is a field in your document
-                        });
-                    }
-                });
-            });
+        const results = await Promise.all(
+            collections.map(({ name, ref }) => fetchDataFromCollection(name, ref))
+        );
+        for (const { name, docs } of results) {
+            if (name === wantedSensor) {
+                const values = docs.map(doc => doc[wantedField]);
+                return values;
+            }
+        }
 
-        return arr[0];
+        return null;
     };
-    console.log("Yay");
-    console.log(fetchValueFromDoc("temperature", "count", collections));
-
-    // ? For testing the output
-
-    // Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
-    //     .then(results => {
-    //         results.forEach(({ name, docs }) => {
-    //             console.log("########### FOR TEST ##########")
-    //             docs.forEach((doc) => {
-    //                 Object.entries(doc).forEach(([key, val]) => {
-    //                     console.log(`Data for ${name}: it's key : ${key}, it's val : ${val}`);
-    //                 });
-    //             });
-    //             // console.log(`Data for ${name}`, docs);
-    //         });
-    //     });
 
     // TODO iterate through object and put it in the correct order
 
-    const factors = ["temperature", "humidity", "windSpeed", "rainMeter", "soilMoisture", "rainingChance", "needToWater"];
-    const fields = ["status", "average", "min", "max"];
-
-    let data: { [key: string]: any[] } = {};
-
-    factors.forEach(factor => {
-        data[factor] = [];
-        fields.forEach(field => {
-            let val = fetchValueFromDoc(factor, field, collections);
-            data[factor].push(val);
-        });
-    });
-
-    let { temperature, humidity, windSpeed, rainMeter, soilMoisture, rainingChance, needToWater } = data;
-
+    const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
+    let cntTime = 0;
+    useEffect(() => {
+        const fetchData = async () => {
+            const status: string[] = [];
+            const average: number[] = [];
+            const min: number[] = [];
+            const max: number[] = [];
+    
+            for (const factor of factors) {
+                const val = await fetchValueFromDoc(factor, "status", collections);
+                if (val !== null) {
+                    status.push(val);
+                }
+            }
+    
+            for (const factor of factors) {
+                const val = await fetchValueFromDoc(factor, "average", collections);
+                if (val !== null) {
+                    average.push(val);
+                }
+            }
+    
+            for (const factor of factors) {
+                const val = await fetchValueFromDoc(factor, "min", collections);
+                if (val !== null) {
+                    min.push(val);
+                }
+            }
+    
+            for (const factor of factors) {
+                const val = await fetchValueFromDoc(factor, "max", collections);
+                if (val !== null) {
+                    max.push(val);
+                }
+            }
+    
+            // Use the retrieved data
+            setStatus(status);
+            setAverage(average);
+            setMin(min);
+            setMax(max);
+            setCnt(cnt => cnt + 1)
+        };
+        fetchData();
+    }, []);
+    
+    console.log("This is status: ", status)
 
     return (
         <div className='justify-between space-y-8'>
             <div className='container mx-auto flex items-center gap-y-10 py-8 mt-12'>
                 <h2 className='text-4xl font-bold text-blue-800'>Consideration Factor</h2>
                 <div className={!isLost ? "flex gap-[6rem] font-bold text-xl text-black" : "flex gap-[2rem] font-bold text-xl text-black"}>
-                        {/* <div>Count</div> */}
-                        <div>Status</div>
-                        <div>Value</div>
-                        <div>Min</div>
-                        <div>Max</div>
-                    </div>
+                    {/* <div>Count</div> */}
+                    <div>Status</div>
+                    <div>Value</div>
+                    <div>Min</div>
+                    <div>Max</div>
+                </div>
             </div>
             <div className=''>
                 {/* Temperature */}
@@ -115,10 +134,10 @@ const Sensor = () => {
                         <FaSun />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[0]}</p>
+                        <p className=''>{average[0]}</p>
+                        <p className="">{min[0]}</p>
+                        <p className="">{max[0]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -130,10 +149,10 @@ const Sensor = () => {
                         <FaTint />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[1]}</p>
+                        <p className=''>{average[1]}</p>
+                        <p className="">{min[1]}</p>
+                        <p className="">{max[1]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -145,10 +164,10 @@ const Sensor = () => {
                         <FaWind />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[2]}</p>
+                        <p className=''>{average[2]}</p>
+                        <p className="">{min[2]}</p>
+                        <p className="">{max[2]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -160,10 +179,10 @@ const Sensor = () => {
                         <FaCloudRain />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[3]}</p>
+                        <p className=''>{average[3]}</p>
+                        <p className="">{min[3]}</p>
+                        <p className="">{max[3]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -175,10 +194,10 @@ const Sensor = () => {
                         <FaWater />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[4]}</p>
+                        <p className=''>{average[4]}</p>
+                        <p className="">{min[4]}</p>
+                        <p className="">{max[4]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -190,10 +209,10 @@ const Sensor = () => {
                         <FaPercentage />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[5]}</p>
+                        <p className=''>{average[5]}</p>
+                        <p className="">{min[5]}</p>
+                        <p className="">{max[5]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
@@ -205,13 +224,16 @@ const Sensor = () => {
                         <FaQuestion />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className=''>ร้อนมาก</p>
-                        <p className=''>200</p>
-                        <p className="">0</p>
-                        <p className="">100</p>
+                        <p className=''>{status[6]}</p>
+                        <p className=''>{average[6]}</p>
+                        <p className="">{min[6]}</p>
+                        <p className="">{max[6]}</p>
                     </div>
                     <div className="flex"></div>
                 </section>
+            </div>
+            <div className="text-2xl ml-6 font-bold text-red-500 w-full flex py-4">
+                <span>Total Count: {cnt}</span>
             </div>
         </div>
     );
