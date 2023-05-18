@@ -15,7 +15,10 @@ module.exports = {
       scrollBehavior: ['smooth'],
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif']
-      }
+      },
+      colors: {
+        'backgroundColor': '#B6FDFF'
+      },
     },
   },
   variants: {},

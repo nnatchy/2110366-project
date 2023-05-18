@@ -46,7 +46,7 @@ const Sensor = () => {
                 });
             });
 
-        return arr;
+        return arr[0];
     };
     console.log("Yay");
     console.log(fetchValueFromDoc("temperature", "count", collections));
@@ -67,16 +67,27 @@ const Sensor = () => {
     //     });
 
     // TODO iterate through object and put it in the correct order
-    let countArray: Number[] = [];
-    let statusArray: String[] = [];
-    let averageArray: Number[] = [];
-    let minArray: Number[] = [];
-    let maxArray: Number[] = [];
+
+    const factors = ["temperature", "humidity", "windSpeed", "rainMeter", "soilMoisture", "rainingChance", "needToWater"];
+    const fields = ["status", "average", "min", "max"];
+
+    let data: { [key: string]: any[] } = {};
+
+    factors.forEach(factor => {
+        data[factor] = [];
+        fields.forEach(field => {
+            let val = fetchValueFromDoc(factor, field, collections);
+            data[factor].push(val);
+        });
+    });
+
+    let { temperature, humidity, windSpeed, rainMeter, soilMoisture, rainingChance, needToWater } = data;
+
 
     return (
         <div className='justify-between space-y-8'>
             <div className='container mx-auto flex items-center px-2 py-4 gap-y-10 py-8 mt-12'>
-                <h2 className='text-4xl font-bold text-blue-800'>ค่าต่างๆในการพิจารณา</h2>
+                <h2 className='text-4xl font-bold text-blue-800'>Consideration Factor</h2>
             </div>
             <div className=''>
                 {/* Temperature */}
@@ -86,7 +97,6 @@ const Sensor = () => {
                         <FaSun />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -102,7 +112,6 @@ const Sensor = () => {
                         <FaTint />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -118,7 +127,6 @@ const Sensor = () => {
                         <FaWind />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -134,7 +142,6 @@ const Sensor = () => {
                         <FaCloudRain />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -150,7 +157,6 @@ const Sensor = () => {
                         <FaWater />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -166,7 +172,6 @@ const Sensor = () => {
                         <FaPercentage />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>
@@ -182,7 +187,6 @@ const Sensor = () => {
                         <FaQuestion />
                     </div>
                     <div className='flex gap-[6rem] font-bold text-xl text-black'>
-                        <p className="">10</p>
                         <p className=''>ร้อนมาก</p>
                         <p className=''>200</p>
                         <p className="">0</p>

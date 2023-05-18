@@ -32,24 +32,24 @@ const Main = () => {
     }, []);
 
     return (
-        <div className="font-poppins bg-green-100 m-0 p-0 w-full h-screen overflow-hidden">
+        <div className="font-poppins bg-backgroundColor m-0 p-0 w-full h-screen overflow-hidden">
             <div className="fixed bg-gradient-to-l from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% top-0 w-[100%] z-20">
-                <div className="container mx-auto flex justify-between items-center  py-4">
-                    <div className="flex gap-1 items-center text-2xl font-bold mr-10">
+                <div className="container mx-auto flex justify-between items-center  py-10">
+                    <div className="flex gap-1 items-center text-3xl font-bold mr-10">
                         <span className="italic">Plants</span>
                         <FaTree />
                         <span className="italic text-blue-800">Watering</span>
                     </div>
                     <div className={!isLost ? "flex gap-[6rem] font-bold text-xl text-black" : "flex gap-[2rem] font-bold text-xl text-black"}>
-                        <div>Count</div>
+                        {/* <div>Count</div> */}
                         <div>Status</div>
-                        <div>Average</div>
+                        <div>Value</div>
                         <div>Min</div>
                         <div>Max</div>
                     </div>
                     <Fragment>
                         <div>
-                            <button className={!isSmallScreen ? `text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium items-center rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300"}
+                            <button className={!isSmallScreen ? `text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font- items-center rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300"}
                                 onClick={() => setShowModal1(true)}>
                                 {!isSmallScreen ? "How we tell status" : <FaQuestion />}
                             </button>
@@ -61,8 +61,11 @@ const Main = () => {
             </div>
 
             {/* Sensor Value */}
-            <div className="py-8 mt-10">
+            <div className="py-10 mt-10">
                 <Sensor />
+            </div>
+            <div className="ml-10">
+                <span>Total Count: 20</span>
             </div>
             {/*Time */}
             <Time />
