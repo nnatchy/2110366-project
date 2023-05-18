@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import Measurement from "./measurement"
-import PopUp from "./tools/modal"
 import Sensor from "./sensor"
 import { FaQuestion, FaTree, FaWater } from "react-icons/fa";
 import Modal1 from "./tools/modal1";
