@@ -40,13 +40,6 @@ const Main = () => {
                         <FaTree />
                         <span className="italic text-blue-800">Watering</span>
                     </div>
-                    <div className={!isLost ? "flex gap-[6rem] font-bold text-xl text-black" : "flex gap-[2rem] font-bold text-xl text-black"}>
-                        {/* <div>Count</div> */}
-                        <div>Status</div>
-                        <div>Value</div>
-                        <div>Min</div>
-                        <div>Max</div>
-                    </div>
                     <Fragment>
                         <div>
                             <button className={!isSmallScreen ? `text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font- items-center rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300"}

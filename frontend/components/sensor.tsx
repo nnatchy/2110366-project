@@ -15,6 +15,17 @@ import {
 } from "firebase/firestore";
 
 const Sensor = () => {
+    const [isLost, setIsLost] = useState(false);
+
+     // check for < 1024
+     useEffect(() => {
+        const checkScreenSizeUnder1024 = () => {
+            setIsLost(window.innerWidth < 1024);
+        };
+        checkScreenSizeUnder1024();
+        window.addEventListener('resize', checkScreenSizeUnder1024);
+        return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
+    }, []);
 
     const db = getFirestore(firebase);
     const collections = [
@@ -86,8 +97,15 @@ const Sensor = () => {
 
     return (
         <div className='justify-between space-y-8'>
-            <div className='container mx-auto flex items-center px-2 py-4 gap-y-10 py-8 mt-12'>
+            <div className='container mx-auto flex items-center gap-y-10 py-8 mt-12'>
                 <h2 className='text-4xl font-bold text-blue-800'>Consideration Factor</h2>
+                <div className={!isLost ? "flex gap-[6rem] font-bold text-xl text-black" : "flex gap-[2rem] font-bold text-xl text-black"}>
+                        {/* <div>Count</div> */}
+                        <div>Status</div>
+                        <div>Value</div>
+                        <div>Min</div>
+                        <div>Max</div>
+                    </div>
             </div>
             <div className=''>
                 {/* Temperature */}
