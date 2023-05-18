@@ -7,28 +7,16 @@ import Time from "./tools/time"
 const Main = () => {
     const [showModal1, setShowModal1] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const [isLost, setIsLost] = useState(false);
 
-    // check for < 1280
     useEffect(() => {
         const checkScreenSize = () => {
             setIsSmallScreen(window.innerWidth < 1280);
         };
 
         checkScreenSize();
-
         window.addEventListener('resize', checkScreenSize);
-        return () => window.removeEventListener('resize', checkScreenSize);
-    }, []);
 
-    // check for < 1024
-    useEffect(() => {
-        const checkScreenSizeUnder1024 = () => {
-            setIsLost(window.innerWidth < 1024);
-        };
-        checkScreenSizeUnder1024();
-        window.addEventListener('resize', checkScreenSizeUnder1024);
-        return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
+        return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
 
     return (
@@ -40,7 +28,7 @@ const Main = () => {
                         <FaTree />
                         <span className="italic text-blue-800">Watering</span>
                     </div>
-                    <div className={!isLost ? "flex gap-[6rem] font-bold text-xl text-black" : "flex gap-[2rem] font-bold text-xl text-black"}>
+                    <div className="flex gap-[6rem] font-bold text-xl text-black">
                         <div>Count</div>
                         <div>Status</div>
                         <div>Average</div>
@@ -49,10 +37,17 @@ const Main = () => {
                     </div>
                     <Fragment>
                         <div>
-                            <button className={!isSmallScreen ? `text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium items-center rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300"}
+                            {!isSmallScreen ?
+                                <button className={`text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium items-center rounded-lg px-5 py-2.5 text-center mr-5 hover:scale-110 ease-in duration-300`}
+                                    onClick={() => setShowModal1(true)}>
+                                    How we tell status?
+                                </button>
+                                :
+                                <button className="w-12 h-12 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-white flex items-center justify-center hover:scale-110 ease-in duration-300"
                                 onClick={() => setShowModal1(true)}>
-                                {!isSmallScreen ? "How we tell status" : <FaQuestion />}
-                            </button>
+                                    <FaQuestion />
+                                </button>
+                            }
                         </div>
                         <Modal1 isVisible={showModal1} onClose={() => setShowModal1(false)} />
                         {/* <PopUp/> */}
@@ -65,7 +60,7 @@ const Main = () => {
                 <Sensor />
             </div>
             {/*Time */}
-            <Time />
+            <Time/>
         </div>
     );
 };
