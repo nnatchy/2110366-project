@@ -1,8 +1,45 @@
 import React, { useState } from 'react';
 import { FaTint, FaCloudRain, FaPercentage, FaQuestion, FaSun, FaWater, FaWind } from 'react-icons/fa'
-import Popup from "./tools/modal"
+
+import firebase from "../lib/firebase"
+import {
+  getFirestore,
+  doc,
+  collection,
+  setDoc,
+  getDoc,
+  deleteDoc,
+  serverTimestamp,
+  getDocs,
+} from "firebase/firestore";
 
 const Sensor = () => {
+
+    const db = getFirestore(firebase);
+    const collections = [
+      { name: "temperature", ref: collection(db, "temperature") },
+      { name: "humidity", ref: collection(db, "humidity") },
+      { name: "wind-speed", ref: collection(db, "wind-speed") },
+      { name: "rain-meter", ref: collection(db, "rain-meter") },
+      { name: "soil-moisture", ref: collection(db, "soil-moisture") },
+      { name: "raining-chance", ref: collection(db, "raining-chance") },
+      { name: "need-to-water", ref: collection(db, "need-to-water") },
+    ];
+  
+    const fetchDataFromCollection = async (name: string, collectionRef: any) => {
+      const snapshot = await getDocs(collectionRef);
+      const docs = snapshot.docs.map(doc => doc.data());
+      return { name, docs };
+    };
+
+    console.log("################################")
+    Promise.all(collections.map(({ name, ref }) => fetchDataFromCollection(name, ref)))
+    .then(results => {
+      results.forEach(({ name, docs }) => {
+        console.log(`Data for ${name}:`, docs);
+      });
+    });
+
     return (
         <div className='justify-between space-y-8'>
             <div className='container mx-auto flex items-center px-2 py-4 gap-y-10 py-8 mt-12'>
