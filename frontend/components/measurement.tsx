@@ -38,7 +38,7 @@ const Measurement = () => {
             <section id="windspeed" className="py-8">
                 <h2>Windspeed</h2>
             </section>
-            <div className='scroll-smooth'>
+            <div className=''>
                 <a href={isBelow ? "#measurement" : "#"} className="fixed bottom-4 right-4 bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="transform transition-transform duration-200 h-6 w-6" style={{ transform: isBelow ? 'rotate(90deg)' : 'rotate(270deg)' }}>
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
