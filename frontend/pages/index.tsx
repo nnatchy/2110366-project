@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <div className='bg-backgroundColor'>
+    <div>
       <Head>
         <title>weather-changing</title>
         <meta name='description' content='Published by LockPaoMai' />
