@@ -12,9 +12,9 @@ type SensorData = {
 
 const SensorTable: React.FC = () => {
   const db = getFirestore(firebase);
-  
+
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       const data: SensorData[] = [
@@ -45,8 +45,8 @@ const SensorTable: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center mt-20 mb-10">
-      <table className="table-auto text-xl w-4/5 divide-y-2 divide-gray-300 rounded-lg shadow-md p-5">
-        <thead className="bg-green-500 text-white">
+      <table className="table-auto text-2xl w-4/5 divide-y-2 divide-gray-300 rounded-lg shadow-md p-5">
+        <thead className="bg-green-500 text-white font-bold text-3xl">
           <tr>
             <th className="px-4 py-2 border-r-2 border-gray-300">Factor</th>
             <th className="px-4 py-2 border-r-2 border-gray-300">Status</th>
@@ -58,16 +58,17 @@ const SensorTable: React.FC = () => {
         <tbody>
           {sensorData.map((data, index) => (
             <tr key={index} className="border-b-2 border-gray-300">
-              <td className="px-4 py-2 border-r-2 border-gray-300">{data.factor}</td>
-              <td className="px-4 py-2 border-r-2 border-gray-300">{data.status}</td>
-              <td className="px-4 py-2 border-r-2 border-gray-300">{data.average}</td>
-              <td className="px-4 py-2 border-r-2 border-gray-300">{data.min}</td>
-              <td className="px-4 py-2">{data.max}</td>
+              <td className="px-4 py-6 border-r-2 border-gray-300 font-bold text-center align-middle">{data.factor}</td>
+              <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.status}</td>
+              <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.average}</td>
+              <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.min}</td>
+              <td className="px-4 py-6 text-center align-middle">{data.max}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+
   );
 };
 
