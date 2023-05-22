@@ -57,13 +57,6 @@ const Main = () => {
             </div>
 
             {/* Sensor Value */}
-<<<<<<< Updated upstream
-            <div className="py-10 mt-10">
-                <Sensor />
-            </div>
-            {/*Time */}
-            <Time />
-=======
             <div className={`${!isLost ? 'mt-10 py-20' : 'py-20'}`}>
                 <Sensor />
             </div>
@@ -71,7 +64,6 @@ const Main = () => {
             <div className="font-bold">
                 <Time />
             </div>
->>>>>>> Stashed changes
         </div>
     );
 };
