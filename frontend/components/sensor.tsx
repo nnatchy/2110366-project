@@ -20,7 +20,7 @@ const SensorTable: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       data = [
-        { factor: "temperature", status: "ร้อนควายๆ", average: 12, min: 11, max: 11 },
+        { factor: "temperature", status: "ร้อนควายๆ", average: 15, min: 11, max: 11 },
         { factor: "humidity", status: "ชื้นจัง", average: 20.32, min: 100, max: 0 },
         { factor: "wind-speed", status: "เเรงจัด", average: 12, min: 121, max: 11 },
         { factor: "rain-meter", status: "ฝนหรอ", average: 2, min: 3, max: 2 },
@@ -42,7 +42,14 @@ const SensorTable: React.FC = () => {
       setSensorData(data);
     };
 
+    // Fetch initial data
     fetchData();
+
+    // Then fetch data every 5 seconds
+    const intervalId = setInterval(fetchData, 60000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -71,7 +78,7 @@ const SensorTable: React.FC = () => {
       </table>
     </div>
   );
-};
+          };
 
 export default SensorTable;
 
