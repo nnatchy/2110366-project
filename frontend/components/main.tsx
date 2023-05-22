@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import Sensor from "./sensor";
-import { FaQuestion, FaTree, FaWater } from "react-icons/fa";
+import { FaQuestion, FaTree } from "react-icons/fa";
 import Modal from "./tools/modal";
 import dynamic from 'next/dynamic';
 
@@ -11,6 +11,9 @@ const Main = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isLost, setIsLost] = useState(false);
+
+  // State for the last updated time
+  const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
 
   // check for < 1280
   useEffect(() => {
@@ -58,14 +61,14 @@ const Main = () => {
         </div>
       </div>
 
-      {/* Sensor Value */}
+      {/* Pass the lastUpdateTime and setLastUpdateTime to Sensor */}
       <div className={`${!isLost ? 'mt-10 py-20' : 'mt-20 py-20'}`}>
-        <Sensor />
+        <Sensor lastUpdateTime={lastUpdateTime} setLastUpdateTime={setLastUpdateTime} />
       </div>
 
-      {/* Date */}
+      {/* Pass the lastUpdateTime to DynamicTime */}
       <div className="py-15 font-bold">
-        <DynamicTime />
+        <DynamicTime lastUpdateTime={lastUpdateTime} />
       </div>
     </div>
   );

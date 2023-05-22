@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "React"
+import React ,{useState,useEffect} from "react"
 
-const Time = () => {
+type Props = {
+  lastUpdateTime: Date;
+};
+
+const Time: React.FC<Props> = ({ lastUpdateTime }) => {
     const [currentDateTime, setCurrentDateTime] = useState(new Date());
-    const [updatedDateTime, setUpdatedDateTime] = useState(new Date());
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -10,18 +13,6 @@ const Time = () => {
         }, 1000);
         return () => clearInterval(timer);
     }, []);
-
-    // Push button in 411 to update information ?
-    useEffect(() => {
-        const second = 1000;
-        const minute = second * 60;
-        const updatedDateTime = setInterval(() => {
-            setUpdatedDateTime(new Date());
-        }, minute * 30);
-        return () => {
-            clearInterval(updatedDateTime);
-        }
-    }, []) // updated value every 30 minutes (will change later)
 
     return (
         <div className="container ml-6 py-4 ml-10">
@@ -34,7 +25,7 @@ const Time = () => {
             <div id="updatedTime" className="text-3xl mt-4">
                 <div className="flex font-poppins text-blue-700">
                     <span className="w-80 font-bold">Last Updated Time:</span>
-                    <span className="text-blue-800">{updatedDateTime.toLocaleDateString()} {updatedDateTime.toLocaleTimeString()}</span>
+                    <span className="text-blue-800">{lastUpdateTime.toLocaleDateString()} {lastUpdateTime.toLocaleTimeString()}</span>
                 </div>
             </div>
         </div>
