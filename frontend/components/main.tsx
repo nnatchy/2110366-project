@@ -32,7 +32,7 @@ const Main = () => {
     }, []);
 
     return (
-        <div className="font-poppins bg-backgroundColor m-0 p-0 w-full h-screen overflow-hidden">
+        <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
             <div className="fixed bg-gradient-to-l from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% top-0 w-[100%] z-20">
                 <div className={!isLost ? "container mx-auto flex justify-between items-center py-10" : "container mx-auto flex justify-between items-center  py-4 gap-2"}>
                     <div className="flex gap-1 items-center text-4xl font-bold mr-10">
@@ -56,7 +56,7 @@ const Main = () => {
             </div>
 
             {/* Sensor Value */}
-            <div className={` ${!isLost ? 'mt-20 py-20' : 'py-20'}`}>
+            <div className={` ${!isLost ? 'mt-10 py-20' : 'py-20'}`}>
                 <Sensor />
             </div>
             {/*Time */}
