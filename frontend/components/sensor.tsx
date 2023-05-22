@@ -10,7 +10,12 @@ type SensorData = {
   max: number;
 };
 
-const SensorTable: React.FC = () => {
+type Props = {
+  lastUpdateTime: Date;
+  setLastUpdateTime: (date: Date) => void;
+};
+
+const SensorTable: React.FC<Props> = ({ lastUpdateTime, setLastUpdateTime }) => {
   const db = getFirestore(firebase);
 
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
@@ -22,28 +27,29 @@ const SensorTable: React.FC = () => {
     for (const factor of factors) {
       const docRef = doc(db, factor, "yourDocumentId");
       const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        // Push the data into your data array
-        data.push({
-          factor,
-          status: docSnap.data().status,
-          average: docSnap.data().average,
-          min: docSnap.data().min,
-          max: docSnap.data().max,
-        });
-      } else {
-        console.log("No such document!");
-      }
-    }
-    
-    // Update the state
+      if (docSnap.exists()) {	
+        // Push the data into your data array	
+        data.push({	
+          factor,	
+          status: docSnap.data().status,	
+          average: docSnap.data().average,	
+          min: docSnap.data().min,	
+          max: docSnap.data().max,	
+        });	
+      } else {	
+        console.log("No such document!");	
+      }	
+    }	
+    	
+    // Update the state	
     setSensorData(data);
+    // Update the last updated time when the data is fetched
+    setLastUpdateTime(new Date());
   };
 
   useEffect(() => {
     fetchData(); // Fetch data immediately
-    const interval = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    const interval = setInterval(fetchData, 10500); // Fetch data every 5 seconds
 
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(interval);
