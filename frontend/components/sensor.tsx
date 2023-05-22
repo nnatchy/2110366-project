@@ -12,7 +12,6 @@ type SensorData = {
 
 const SensorTable: React.FC = () => {
   const db = getFirestore(firebase);
-  
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
   
   useEffect(() => {
