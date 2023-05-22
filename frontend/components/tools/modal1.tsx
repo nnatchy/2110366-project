@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { FaQuestion } from 'react-icons/fa';
+import { FaAddressCard, FaQuestion, FaSteam } from 'react-icons/fa';
 
 const data = [
   { var: 'Temperature', low: '<15°C', normal: '15°C - 35°C', high: '>35°C'},
@@ -18,7 +18,11 @@ function TablePage({ onClose } : any) {
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
+<<<<<<< Updated upstream:frontend/components/tools/modal1.tsx
               <th colSpan={4} className="text-center text-2xl py-3 bg-gray-50">
+=======
+              <th colSpan={4} className="text-center text-4xl py-3 bg-gray-50 items-center align-middle">
+>>>>>>> Stashed changes:frontend/components/tools/modal.tsx
                 Measurement
               </th>
             </tr>
