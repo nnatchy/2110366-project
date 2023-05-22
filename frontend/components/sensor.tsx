@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import firebase from '../lib/firebase';
 
 type SensorData = {
@@ -10,8 +10,6 @@ type SensorData = {
   max: number;
 };
 
-let data: SensorData[] = [];
-
 const SensorTable: React.FC = () => {
   const db = getFirestore(firebase);
 
@@ -19,26 +17,28 @@ const SensorTable: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      data = [
-        { factor: "temperature", status: "ร้อนควายๆ", average: 12, min: 11, max: 11 },
-        { factor: "humidity", status: "ชื้นจัง", average: 20.32, min: 100, max: 0 },
-        { factor: "wind-speed", status: "เเรงจัด", average: 12, min: 121, max: 11 },
-        { factor: "rain-meter", status: "ฝนหรอ", average: 2, min: 3, max: 2 },
-        { factor: "soil-moisture", status: "ชิ้นจุง", average: 11, min: 11, max: 1 },
-        { factor: "raining-chance", status: "น้อย", average: 121, min: 101, max: 11 },
-        { factor: "need-to-water", status: "ไม่", average: 22, min: 1, max: 2 },
-      ];
+      const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
+      let data: SensorData[] = [];
 
-      for (const item of data) {
-        const docRef = doc(db, item.factor, "yourDocumentId");
-        await setDoc(docRef, {
-          status: item.status,
-          average: item.average,
-          min: item.min,
-          max: item.max
-        });
+      for (const factor of factors) {
+        const docRef = doc(db, factor, "yourDocumentId");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          // Push the data into your data array
+          data.push({
+            factor,
+            status: docSnap.data().status,
+            average: docSnap.data().average,
+            min: docSnap.data().min,
+            max: docSnap.data().max,
+          });
+        } else {
+          console.log("No such document!");
+        }
       }
-
+      
+      // Update the state
       setSensorData(data);
     };
 
@@ -74,5 +74,3 @@ const SensorTable: React.FC = () => {
 };
 
 export default SensorTable;
-
-export {data};
