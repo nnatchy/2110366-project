@@ -3,8 +3,6 @@ import Sensor from "./sensor";
 import { FaQuestion, FaTree, FaWater } from "react-icons/fa";
 import Modal from "./tools/modal";
 import dynamic from 'next/dynamic';
-import { data } from "./sensor";
-
 // Dynamic import for Time component
 const DynamicTime = dynamic(() => import('./tools/time'), { ssr: false });
 
@@ -34,8 +32,6 @@ const Main = () => {
     window.addEventListener('resize', checkScreenSizeUnder1024);
     return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
   }, []);
-
-  console.log(data);
 
   return (
     <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
