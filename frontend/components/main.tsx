@@ -3,7 +3,6 @@ import Sensor from "./sensor";
 import { FaQuestion, FaTree, FaWater } from "react-icons/fa";
 import Modal from "./tools/modal";
 import dynamic from 'next/dynamic';
-import { data } from "./sensor";
 
 // Dynamic import for Time component
 const DynamicTime = dynamic(() => import('./tools/time'), { ssr: false });
@@ -35,18 +34,16 @@ const Main = () => {
     return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
   }, []);
 
-  console.log(data);
-
   return (
     <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
       <div className="fixed bg-gradient-to-l from-indigo-500 to-emerald-500 top-0 w-full z-20">
         <div className={!isLost ? "container mx-auto flex justify-between items-center py-10" : "container mx-auto flex justify-between items-center py-4 gap-2"}>
-          <div className="flex gap-1 items-center text-4xl font-bold mr-10">
+          <div className={`flex gap-1 items-center font-bold mr-10 ${!isLost ? "text-4xl" : "text-3xl"}`}>
             <span className="italic">Plants</span>
             <FaTree />
             <span className="italic text-blue-800">Watering</span>
           </div>
-          <div className={`font-bold bg-gradient-to-r from-cyan-200 to-cyan-300 text-transparent bg-clip-text ${!isLost ? 'text-5xl' : 'text-2xl'}`}>
+          <div className={`font-bold bg-gradient-to-r from-cyan-200 to-cyan-300 text-transparent bg-clip-text ${!isLost ? 'text-5xl' : 'text-3xl'}`}>
             <span>LOCK PAO MAI</span>
           </div>
           <Fragment>
