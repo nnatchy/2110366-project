@@ -10,6 +10,8 @@ type SensorData = {
   max: number;
 };
 
+let data: SensorData[] = [];
+
 const SensorTable: React.FC = () => {
   const db = getFirestore(firebase);
 
@@ -17,7 +19,7 @@ const SensorTable: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data: SensorData[] = [
+      data = [
         { factor: "temperature", status: "ร้อนควายๆ", average: 12, min: 11, max: 11 },
         { factor: "humidity", status: "ชื้นจัง", average: 20.32, min: 100, max: 0 },
         { factor: "wind-speed", status: "เเรงจัด", average: 12, min: 121, max: 11 },
@@ -68,8 +70,9 @@ const SensorTable: React.FC = () => {
         </tbody>
       </table>
     </div>
-
   );
 };
 
 export default SensorTable;
+
+export {data};

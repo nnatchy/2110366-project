@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef, Fragment } from "react";
 import Sensor from "./sensor"
 import { FaQuestion, FaTree, FaWater } from "react-icons/fa";
-import Modal1 from "./tools/modal";
+import Modal from "./tools/modal";
 import Time from "./tools/time"
+import { data } from "./sensor"
 
 const Main = () => {
-    const [showModal1, setShowModal1] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [isLost, setIsLost] = useState(false);
 
@@ -31,6 +32,8 @@ const Main = () => {
         return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
     }, []);
 
+    console.log(data);
+
     return (
         <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
             <div className="fixed bg-gradient-to-l from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% top-0 w-[100%] z-20">
@@ -46,11 +49,11 @@ const Main = () => {
                     <Fragment>
                         <div>
                             <button className={!isSmallScreen ? `text-xl text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font- items-center rounded-lg px-6 py-3 text-center mr-5 hover:scale-110 ease-in duration-300` : "w-16 h-16 rounded-full bg-blue-700 hover:bg-blue-800 shadow-lg text-xl text-white flex items-center justify-center hover:scale-110 ease-in duration-300"}
-                                onClick={() => setShowModal1(true)}>
+                                onClick={() => setShowModal(true)}>
                                 {!isSmallScreen ? "How we tell status" : <FaQuestion />}
                             </button>
                         </div>
-                        <Modal1 isVisible={showModal1} onClose={() => setShowModal1(false)} />
+                        <Modal isVisible={showModal} onClose={() => setShowModal(false)} />
                     </Fragment>
                 </div>
             </div>
