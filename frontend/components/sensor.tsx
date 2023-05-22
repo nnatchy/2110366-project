@@ -15,36 +15,41 @@ const SensorTable: React.FC = () => {
 
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
-      let data: SensorData[] = [];
+  const fetchData = async () => {
+    const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
+    let data: SensorData[] = [];
 
-      for (const factor of factors) {
-        const docRef = doc(db, factor, "yourDocumentId");
-        const docSnap = await getDoc(docRef);
+    for (const factor of factors) {
+      const docRef = doc(db, factor, "yourDocumentId");
+      const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          // Push the data into your data array
-          data.push({
-            factor,
-            status: docSnap.data().status,
-            average: docSnap.data().average,
-            min: docSnap.data().min,
-            max: docSnap.data().max,
-          });
-        } else {
-          console.log("No such document!");
-        }
+      if (docSnap.exists()) {
+        // Push the data into your data array
+        data.push({
+          factor,
+          status: docSnap.data().status,
+          average: docSnap.data().average,
+          min: docSnap.data().min,
+          max: docSnap.data().max,
+        });
+      } else {
+        console.log("No such document!");
       }
-      
-      // Update the state
-      setSensorData(data);
-    };
+    }
+    
+    // Update the state
+    setSensorData(data);
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchData(); // Fetch data immediately
+    const interval = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+
+    // Cleanup function to clear the interval when the component is unmounted
+    return () => clearInterval(interval);
   }, []);
 
+  // The component needs to return a React element
   return (
     <div className="flex justify-center items-center mt-20 mb-10">
       <table className="table-auto text-2xl w-4/5 divide-y-2 divide-gray-300 rounded-lg shadow-md p-5">
