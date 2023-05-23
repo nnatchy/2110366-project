@@ -1,88 +1,35 @@
 #include <ESP8266WiFi.h>
-#include <FirebaseESP8266.h>
+#include <FirebaseArduino.h>
+#include <SoftwareSerial.h>
 
-// Initialize FirebaseESP8266 library
-FirebaseData firebaseData;
+#define FIREBASE_HOST "watering-plant-2c69b-default-rtdb.asia-southeast1.firebasedatabase.app"
+#define FIREBASE_AUTH "XOMBr8JX1mXKiZQXvbSyhhYEkhLc2f6YWsT9gr6N"
 
-// Replace with your Firebase project's host
-#define FIREBASE_HOST "your-firebase-host.firebaseio.com"
-
-// Replace with your Firebase project's secret
-#define FIREBASE_AUTH "your-firebase-auth"
-
-// Replace with your network credentials
-#define WIFI_SSID "your_SSID"
-#define WIFI_PASSWORD "your_PASSWORD"
+// Define your Wi-Fi credentials
+const char* ssid = "Chantana 5G";
+const char* password = "27462904";
 
 void setup() {
   Serial.begin(115200);
-  
-  // Connect to WiFi
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("Connecting to Wi-Fi");
+
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
     Serial.print(".");
-    delay(300);
   }
-  Serial.println();
-  Serial.println("Wi-Fi connected");
-  
-  // Connect to Firebase
+  Serial.println("Connected to Wi-Fi!");
+
+  // Initialize Firebase
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-  Serial.println("Connected to Firebase");
 }
 
 void loop() {
-  // Update data in the Firebase database
-  if (Firebase.setInt(firebaseData, "/sensorData/temperature", random(20, 30))) {
-    Serial.println("Successfully updated data");
-  } else {
-    Serial.println("Failed to update data");
-    Serial.println("Reason: " + firebaseData.errorReason());
-  }
-  
-  delay(5000);
+  // Collect data from sensors or other sources
+  //float temperature = readTemperature();
+
+  // Send data to Firestore
+  Firebase.setFloat("temperature/average", 100.4);
+
+  delay(5000); // Wait 5 seconds before sending the next data point
 }
-
-
-// #include <ESP8266WiFi.h>
-// #include <FirebaseESP8266.h>
-
-// #define FIREBASE_HOST "embed-toilet-default-rtdb.asia-southeast1.firebasedatabase.app" // Your Firebase Project URL goes here without "http:" and "/"
-// #define FIREBASE_AUTH "LSSpk0ijKUICj9KLXTjtU6IA8tUFLHdzbwriclCu" // Your secret key
-// #define WIFI_SSID "Nut (Iphone)" // your WiFi SSID
-// #define WIFI_PASSWORD "Nut12345" // your WiFi Password
-
-// FirebaseData firebaseData;
-
-// void setup() {
-//   Serial.begin(115200);
-  
-//   // connect to wifi.
-//   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-//   Serial.print("connecting");
-//   while (WiFi.status() != WL_CONNECTED) {
-//     Serial.print(".");
-//     delay(500);
-//   }
-//   Serial.println();
-//   Serial.print("connected: ");
-//   Serial.println(WiFi.localIP());
-  
-//   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-
-//   // Set max temperature for "yourDocumentId" in Firebase
-//   Firebase.setInt(firebaseData, "/temperature/yourDocumentId/max", 120);
-// }
-
-// void loop() {
-//   // Here you'd implement code to retrieve data from the STM32 and update Firebase.
-  
-//   // You might want to update the current temperature for example, make sure the path matches your Firebase structure
-//   int temperature = Firebase.getInt(firebaseData, "/temperature/yourDocumentId/current");
-//   temperature = temperature + 1;
-
-//   Firebase.setInt(firebaseData, "/temperature/yourDocumentId", temperature);
-  
-//   delay(1000); // Wait for a second
-// }
