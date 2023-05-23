@@ -2,14 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-FnzyPwIoq2re2vbgvYtoWfyER1Po7SY",
-  authDomain: "embed-toilet.firebaseapp.com",
-  databaseURL: "https://embed-toilet-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "embed-toilet",
-  storageBucket: "embed-toilet.appspot.com",
-  messagingSenderId: "664582119012",
-  appId: "1:664582119012:web:c827cd0171d65ca80a8971",
-  measurementId: "G-F53MT6J58E"
+  apiKey: "AIzaSyAjTQqJn3NN7HUP_YCinIrmMtKO_upEsac",
+  authDomain: "watering-plant-2c69b.firebaseapp.com",
+  databaseURL: "https://watering-plant-2c69b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "watering-plant-2c69b",
+  storageBucket: "watering-plant-2c69b.appspot.com",
+  messagingSenderId: "502833181522",
+  appId: "1:502833181522:web:64f122e75b2ad51b8d008b",
+  measurementId: "G-6Z6RHPV86X"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
