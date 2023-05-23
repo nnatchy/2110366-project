@@ -49,7 +49,7 @@ const SensorTable: React.FC<Props> = ({ lastUpdateTime, setLastUpdateTime }) => 
 
   useEffect(() => {
     fetchData(); // Fetch data immediately
-    const interval = setInterval(fetchData, 10500); // Fetch data every 5 seconds
+    const interval = setInterval(fetchData, 10500); // Fetch data every 10 seconds
 
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(interval);
