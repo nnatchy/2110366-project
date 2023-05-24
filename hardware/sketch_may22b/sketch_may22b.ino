@@ -1,41 +1,44 @@
-#include <ESP8266WiFi.h>
 #include <FirebaseESP8266.h>
+#include <ESP8266WiFi.h>
 
-#define FIREBASE_HOST "embed-toilet-default-rtdb.asia-southeast1.firebasedatabase.app" // Your Firebase Project URL goes here without "http:" and "/"
-#define FIREBASE_AUTH "LSSpk0ijKUICj9KLXTjtU6IA8tUFLHdzbwriclCu" // Your secret key
-#define WIFI_SSID "Nut (Iphone)" // your WiFi SSID
-#define WIFI_PASSWORD "Nut12345" // your WiFi Password
+#define FIREBASE_HOST "watering-plant-2c69b-default-rtdb.asia-southeast1.firebasedatabase.app" // Replace with your Firebase Project URL
+#define FIREBASE_AUTH "XOMBr8JX1mXKiZQXvbSyhhYEkhLc2f6YWsT9gr6N" // Replace with your Firebase secret
+#define WIFI_SSID "RockRock" // Replace with your WiFi SSID
+#define WIFI_PASSWORD "lalararock" // Replace with your WiFi password
 
 FirebaseData firebaseData;
 
 void setup() {
-  Serial.begin(115200);
-  
-  // connect to wifi.
+  Serial.begin(9600);
+  delay(1000);
+
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  Serial.print("connecting");
+  Serial.print("Connecting to ");
+  Serial.print(WIFI_SSID);
   while (WiFi.status() != WL_CONNECTED) {
     Serial.print(".");
-    delay(500);
+    Serial.print("+");
+    Serial.println();
+    delay(300);
   }
   Serial.println();
-  Serial.print("connected: ");
-  Serial.println(WiFi.localIP());
-  
-  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 
-  // Set max temperature for "yourDocumentId" in Firebase
-  Firebase.setInt(firebaseData, "/temperature/yourDocumentId/max", 120);
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
 }
 
 void loop() {
-  // Here you'd implement code to retrieve data from the STM32 and update Firebase.
-  
-  // You might want to update the current temperature for example, make sure the path matches your Firebase structure
-  int temperature = Firebase.getInt(firebaseData, "/temperature/yourDocumentId/current");
-  temperature = temperature + 1;
+  // Firebase.setString(firebaseData, "/message", "Hello from ESP826612345");
+  if (Firebase.setString(firebaseData, "/temperature/average", "Hello from ESP826612345")) {
+    Serial.println("PASSED");
+    Serial.println("PATH: " + firebaseData.dataPath());
+    Serial.println("TYPE: " + firebaseData.dataType());
+    Serial.println("ETag: " + firebaseData.ETag());
+    Serial.println();
+  } else {
+    Serial.println("FAILED");
+    Serial.println();
+  }
 
-  Firebase.setInt(firebaseData, "/temperature/yourDocumentId", temperature);
-  
-  delay(1000); // Wait for a second
+  delay(1000);
 }
