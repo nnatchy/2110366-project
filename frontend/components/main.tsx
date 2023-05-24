@@ -1,3 +1,4 @@
+// Import necessary dependencies and components
 import React, { useEffect, useState, Fragment } from "react";
 import Sensor from "./sensor";
 import { FaQuestion, FaTree } from "react-icons/fa";
@@ -7,36 +8,47 @@ import dynamic from 'next/dynamic';
 // Dynamic import for Time component
 const DynamicTime = dynamic(() => import('./tools/time'), { ssr: false });
 
+// Define the Main component
 const Main = () => {
+  // State initialization
   const [showModal, setShowModal] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isLost, setIsLost] = useState(false);
-
-  // State for the last updated time
   const [lastUpdateTime, setLastUpdateTime] = useState(new Date());
 
-  // check for < 1280
+  // Check for screen size < 1280
   useEffect(() => {
     const checkScreenSize = () => {
       setIsSmallScreen(window.innerWidth < 1280);
     };
 
+    // Initial check on component mount
     checkScreenSize();
 
+    // Add event listener for window resize
     window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup by removing event listener on component unmount
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // check for < 1024
+  // Check for screen size < 1024
   useEffect(() => {
     const checkScreenSizeUnder1024 = () => {
       setIsLost(window.innerWidth < 1024);
     };
+
+    // Initial check on component mount
     checkScreenSizeUnder1024();
+
+    // Add event listener for window resize
     window.addEventListener('resize', checkScreenSizeUnder1024);
+
+    // Cleanup by removing event listener on component unmount
     return () => window.removeEventListener('resize', checkScreenSizeUnder1024);
   }, []);
 
+  // Rendered JSX
   return (
     <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
       <div className="fixed bg-gradient-to-l from-indigo-500 to-emerald-500 top-0 w-full z-20">
