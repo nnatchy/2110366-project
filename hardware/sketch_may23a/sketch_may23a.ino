@@ -126,10 +126,24 @@ void loop() {
       Serial.println("REASON: " + firebaseData.errorReason());
     }
 
+
 // Soil moisture
+    if (Firebase.getFloat(firebaseData, "soil-moisture/min")) {
+      float minSoil = firebaseData.floatData();
+      if (minSoil < soil.toFloat()) {
+        if (!Firebase.setFloat(firebaseData, "soil-moisture/min", soil.toFloat())) {
+          Serial.println("FAILED to set soil-moisture/min");
+          Serial.println("REASON: " + firebaseData.errorReason());
+        }
+      }
+    } else {
+      Serial.println("FAILED to get soil-moisture/min");
+      Serial.println("REASON: " + firebaseData.errorReason());
+    }
+
     if (Firebase.getFloat(firebaseData, "soil-moisture/max")) {
       float maxSoil = firebaseData.floatData();
-      if (maxSoil < soil.toFloat()) {
+      if (maxSoil > soil.toFloat()) {
         if (!Firebase.setFloat(firebaseData, "soil-moisture/max", soil.toFloat())) {
           Serial.println("FAILED to set soil-moisture/max");
           Serial.println("REASON: " + firebaseData.errorReason());
@@ -140,18 +154,6 @@ void loop() {
       Serial.println("REASON: " + firebaseData.errorReason());
     }
 
-    if (Firebase.getFloat(firebaseData, "soil-moisture/min")) {
-      float minSoil = firebaseData.floatData();
-      if (minSoil > soil.toFloat()) {
-        if (!Firebase.setFloat(firebaseData, "soil-moisture/min", soil.toFloat())) {
-          Serial.println("FAILED to set soil-moisture/min");
-          Serial.println("REASON: " + firebaseData.errorReason());
-        }
-      }
-    } else {
-      Serial.println("FAILED to get soil-moisture/min");
-      Serial.println("REASON: " + firebaseData.errorReason());
-    }
 
 // Water level
     if (Firebase.getFloat(firebaseData, "water-level/max")) {
@@ -238,9 +240,9 @@ void loop() {
     float soilFloat = soil.toFloat();
 
     if (soilFloat < 2800.0) {
-      soilStatus = "Low";
-    } else if (soilFloat > 3500.0) {
       soilStatus = "High";
+    } else if (soilFloat > 3500.0) {
+      soilStatus = "Low";
     } else {
       soilStatus = "Normal";
     }
