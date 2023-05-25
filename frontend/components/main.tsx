@@ -38,7 +38,7 @@ const Main = () => {
   }, []);
 
   return (
-    <div className="font-poppins bg-backgroundColor m-0 p-0 w-full">
+    <div className="font-poppins bg-backgroundColor m-0 p-0 w-full h-screen overflow-auto">
       <div className="fixed bg-gradient-to-l from-indigo-500 to-emerald-500 top-0 w-full z-20">
         <div className={!isLost ? "container mx-auto flex justify-between items-center py-10" : "container mx-auto flex justify-between items-center py-4"}>
           <div className={`flex items-center font-bold mr-10 ${!isLost ? "text-4xl gap-1" : "text-3xl"}`}>

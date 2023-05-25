@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import firebase from '../lib/firebase';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import firebaseApp from '../lib/firebase';
 
 type SensorData = {
   factor: string;
@@ -10,50 +10,53 @@ type SensorData = {
   max: number;
 };
 
-type Props = {
+type Time = {
   lastUpdateTime: Date;
   setLastUpdateTime: (date: Date) => void;
 };
 
-const SensorTable: React.FC<Props> = ({ lastUpdateTime, setLastUpdateTime }) => {
-  const db = getFirestore(firebase);
+const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
+  const db = getDatabase(firebaseApp);
 
   const [sensorData, setSensorData] = useState<SensorData[]>([]);
 
-  const fetchData = async () => {
+  const fetchData = () => {
     const factors = ["temperature", "humidity", "wind-speed", "rain-meter", "soil-moisture", "raining-chance", "need-to-water"];
-    let data: SensorData[] = [];
-
+    
+    let newSensorData: SensorData[] = [];
+  
     for (const factor of factors) {
-      const docRef = doc(db, factor, "yourDocumentId");
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {	
-        // Push the data into your data array	
-        data.push({	
-          factor,	
-          status: docSnap.data().status,	
-          average: docSnap.data().average,	
-          min: docSnap.data().min,	
-          max: docSnap.data().max,	
-        });	
-      } else {	
-        console.log("No such document!");	
-      }	
-    }	
-    	
-    // Update the state	
-    setSensorData(data);
-    // Update the last updated time when the data is fetched
-    setLastUpdateTime(new Date());
+      const dataRef = ref(db, factor);
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const newData: SensorData = {
+            factor,
+            status: data.status,
+            average: data.average,
+            min: data.min,
+            max: data.max,
+          };
+          newSensorData.push(newData);
+        }
+      });
+    }
+    // Only update state if new data is different from old data
+    if (JSON.stringify(newSensorData) !== JSON.stringify(sensorData)) {
+      setSensorData(newSensorData);
+      // Update the last updated time when the data is fetched
+      setLastUpdateTime(new Date());
+    }
   };
 
   useEffect(() => {
     fetchData(); // Fetch data immediately
-    const interval = setInterval(fetchData, 10500); // Fetch data every 10 seconds
-
+    const interval = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+  
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(interval);
   }, []);
+  
 
   // The component needs to return a React element
   return (
