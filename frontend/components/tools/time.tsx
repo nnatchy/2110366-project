@@ -1,7 +1,7 @@
-import React ,{useState,useEffect} from "react"
+import React, { useState, useEffect } from "react"
 
 type Props = {
-  lastUpdateTime: Date;
+    lastUpdateTime: Date;
 };
 
 const Time: React.FC<Props> = ({ lastUpdateTime }) => {
