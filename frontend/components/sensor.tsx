@@ -51,7 +51,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
       // check the current information whether plants should be watered or not
       for (const checkData in newSensorData) {
         if (checkData[0] == "water-level") {
-          setShouldWater(checkData[1] == "High" ? true : false);
+          setShouldWater(checkData[1] == "High" ? false : true);
         } else {
           if (checkData[0] == "soil-moisture") {
             setShouldWater(checkData[1] == "Low" ? true : false);
