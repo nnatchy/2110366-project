@@ -218,22 +218,22 @@ void loop() {
     }
 
 // Set water-level status
-    // String rainStatus;
-    // float rainFloat = (rain.toFloat() / 21);
+    String rainStatus;
+    float rainFloat = (rain.toFloat() / 21);
 
-    // if (rainFloat < 10.0) {
-    //   rainStatus = "Low";
-    // // } else if (rainFloat > 90.0) {
-    // } else if (rainFloat > 50.0) {
-    //   rainStatus = "High";
-    // } else {
-    //   rainStatus = "Normal";
-    // }
+    if (rainFloat < 10.0) {
+      rainStatus = "Low";
+    // } else if (rainFloat > 90.0) {
+    } else if (rainFloat > 50.0) {
+      rainStatus = "High";
+    } else {
+      rainStatus = "Normal";
+    }
 
-    // if (!Firebase.setString(firebaseData, "water-level/status", rainStatus)) {
-    //   Serial.println("FAILED to set water-level/status");
-    //   Serial.println("REASON: " + firebaseData.errorReason());
-    // }
+    if (!Firebase.setString(firebaseData, "water-level/status", rainStatus)) {
+      Serial.println("FAILED to set water-level/status");
+      Serial.println("REASON: " + firebaseData.errorReason());
+    }
 
 // Set soil-moisture status
     String soilStatus;
