@@ -68,7 +68,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(interval);
   }, []);
-  
+
   // The component needs to return a React element
   return (
     <div>
@@ -96,11 +96,11 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
           </tbody>
         </table>
       </div>
-      
-      <div className='flex text-4xl font-bold justify-center mt-5'> 
-          <span className='mr-5 text-sky-600/100'> Water ? </span>
-          <span> <FaArrowCircleRight/> </span>
-          <span className="ml-5 text-green-700">{shouldWater ? "YES !!" : <span className="text-red-500">NO !!</span>}</span>
+
+      <div className='flex text-4xl font-bold justify-center mt-5'>
+        <span className='mr-5 text-sky-600/100'> Water ? </span>
+        <span> <FaArrowCircleRight /> </span>
+        <span className="ml-5 text-green-700">{shouldWater ? "YES !!" : <span className="text-red-500">NO !!</span>}</span>
       </div>
     </div>
   );
