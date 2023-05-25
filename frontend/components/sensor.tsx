@@ -6,7 +6,7 @@ import { FaArrowCircleRight } from 'react-icons/fa';
 type SensorData = {
   factor: string;
   status: string;
-  average: number;
+  value: number;
   min: number;
   max: number;
 };
@@ -35,7 +35,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
           const newData: SensorData = {
             factor,
             status: data.status,
-            average: data.average,
+            value: data.value,
             min: data.min,
             max: data.max,
           };
@@ -78,7 +78,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
             <tr>
               <th className="px-4 py-2 border-r-2 border-gray-300">Factor</th>
               <th className="px-4 py-2 border-r-2 border-gray-300">Status</th>
-              <th className="px-4 py-2 border-r-2 border-gray-300">Average</th>
+              <th className="px-4 py-2 border-r-2 border-gray-300">Value</th>
               <th className="px-4 py-2 border-r-2 border-gray-300">Min</th>
               <th className="px-4 py-2">Max</th>
             </tr>
@@ -88,7 +88,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
               <tr key={index} className="border-b-2 border-gray-300">
                 <td className="px-4 py-6 border-r-2 border-gray-300 font-bold text-center align-middle">{data.factor}</td>
                 <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.status}</td>
-                <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.average}</td>
+                <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.value}</td>
                 <td className="px-4 py-6 border-r-2 border-gray-300 text-center align-middle">{data.min}</td>
                 <td className="px-4 py-6 text-center align-middle">{data.max}</td>
               </tr>
