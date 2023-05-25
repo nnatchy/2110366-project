@@ -43,21 +43,23 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
         }
       });
     }
+    for (let checkData of newSensorData) {
+      if (checkData.factor === 'water-level') {
+        console.log(checkData.status);
+        setShouldWater(checkData.status == 'High' ? true : false);
+      } else {
+        if (checkData.factor === 'soil-moisture') {
+          setShouldWater(checkData.status == 'Low' ? true : false);
+        }
+      }
+    }
     // Only update state if new data is different from old data
     if (JSON.stringify(newSensorData) !== JSON.stringify(sensorData)) {
       setSensorData(newSensorData);
       // Update the last updated time when the data is fetched
       setLastUpdateTime(new Date());
       // check the current information whether plants should be watered or not
-      for (const checkData in newSensorData) {
-        if (checkData[0] == "water-level") {
-          setShouldWater(checkData[1] == "High" ? false : true);
-        } else {
-          if (checkData[0] == "soil-moisture") {
-            setShouldWater(checkData[1] == "Low" ? true : false);
-          }
-        }
-      }
+      // console.log(newSensorData);
     }
   };
 
@@ -100,7 +102,13 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
       <div className='flex text-4xl font-bold justify-center mt-5'>
         <span className='mr-5 text-sky-600/100'> Water ? </span>
         <span> <FaArrowCircleRight /> </span>
-        <span className="ml-5 text-green-700">{shouldWater ? "YES !!" : <span className="text-red-500">NO !!</span>}</span>
+        <span className="ml-5 text-green-700">
+          {shouldWater ? (
+            'YES !!'
+          ) : (
+            <span className="text-red-500">NO !!</span>
+          )}
+        </span>
       </div>
     </div>
   );
