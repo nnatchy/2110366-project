@@ -62,12 +62,12 @@ const Main = () => {
       </div>
 
       {/* Pass the lastUpdateTime and setLastUpdateTime to Sensor */}
-      <div className={`${!isLost ? 'mt-10 py-20' : 'mt-20 py-20'}`}>
+      <div className={`${!isLost ? 'mt-10 py-14' : 'mt-20 py-20'}`}>
         <Sensor lastUpdateTime={lastUpdateTime} setLastUpdateTime={setLastUpdateTime} />
       </div>
 
       {/* Pass the lastUpdateTime to DynamicTime */}
-      <div className="py-15 font-bold">
+      <div className="font-bold">
         <DynamicTime lastUpdateTime={lastUpdateTime} />
       </div>
     </div>

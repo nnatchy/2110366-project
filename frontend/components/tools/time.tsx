@@ -15,7 +15,7 @@ const Time: React.FC<Props> = ({ lastUpdateTime }) => {
     }, []);
 
     return (
-        <div className="container ml-6 py-4 ml-10">
+        <div className="container ml-10">
             <div id="currentTime" className="text-3xl">
                 <div className="flex font-poppins text-blue-700">
                     <span className="w-80 font-bold">Current Time:</span>
