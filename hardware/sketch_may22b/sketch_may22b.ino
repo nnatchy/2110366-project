@@ -3,8 +3,8 @@
 
 #define FIREBASE_HOST "watering-plant-2c69b-default-rtdb.asia-southeast1.firebasedatabase.app" // Replace with your Firebase Project URL
 #define FIREBASE_AUTH "XOMBr8JX1mXKiZQXvbSyhhYEkhLc2f6YWsT9gr6N" // Replace with your Firebase secret
-#define WIFI_SSID "RockRock" // Replace with your WiFi SSID
-#define WIFI_PASSWORD "lalararock" // Replace with your WiFi password
+#define WIFI_SSID "Nut_" // Replace with your WiFi SSID
+#define WIFI_PASSWORD "Nut12345" // Replace with your WiFi password
 
 FirebaseData firebaseData;
 
@@ -29,7 +29,7 @@ void setup() {
 
 void loop() {
   // Firebase.setString(firebaseData, "/message", "Hello from ESP826612345");
-  if (Firebase.setString(firebaseData, "/temperature/average", "Hello from ESP826612345")) {
+  if (Firebase.setString(firebaseData, "/temperature/status", "Hello from ESP8266")) {
     Serial.println("PASSED");
     Serial.println("PATH: " + firebaseData.dataPath());
     Serial.println("TYPE: " + firebaseData.dataType());
