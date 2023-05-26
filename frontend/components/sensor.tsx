@@ -44,8 +44,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
       });
     }
     for (let checkData of newSensorData) {
-      if (checkData.factor === 'water-level' || checkData.factor === 'temperature') {
-        // console.log(checkData.status);
+      if (checkData.factor === 'water-level') {
         setShouldWater(checkData.status == 'High' ? true : false);
         break;
       } else if (checkData.factor === 'soil-moisture') {
@@ -54,6 +53,11 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
       } else if (checkData.factor === 'humidity') {
         setShouldWater(checkData.value == 100 ? true : false);
         break;
+      } else if (checkData.factor === 'temperature') {
+        if (!shouldWater) {
+          setShouldWater(checkData.status == 'High' ? true : false);
+          break;
+        }
       }
     }
     
