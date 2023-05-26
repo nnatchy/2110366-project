@@ -54,7 +54,7 @@ const SensorTable: React.FC<Time> = ({ lastUpdateTime, setLastUpdateTime }) => {
         setShouldWater(checkData.value == 100 ? true : false);
         break;
       } else if (checkData.factor === 'temperature') {
-        if (!shouldWater) {
+        if (shouldWater) {
           setShouldWater(checkData.status == 'High' ? true : false);
           break;
         }
