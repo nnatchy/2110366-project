@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>weather-changing</title>
+        <title>plants-watering</title>
         <meta name='description' content='Published by LockPaoMai' />
       </Head>
       <Main/>
